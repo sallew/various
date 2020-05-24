@@ -13,6 +13,8 @@ type ContactDetails struct {
 	Message string
 }
 
+var details ContactDetails
+
 func info(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "_info_\n")
 }
@@ -24,11 +26,9 @@ func reader(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	details := ContactDetails{
-		Email:   r.FormValue("email"),
-		Subject: r.FormValue("subject"),
-		Message: r.FormValue("message"),
-	}
+	details.Email = r.FormValue("email")
+	details.Subject = r.FormValue("subject")
+	details.Message = r.FormValue("message")
 
 	// do something with details
 	_ = details
