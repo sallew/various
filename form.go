@@ -2,9 +2,15 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
+	"os"
 )
+
+type User struct {
+	Name string
+}
 
 func hello(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
@@ -32,6 +38,19 @@ func hello(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+	data := User{Name: "John Smith"}
+
+	t, err := template.ParseFiles("show.gohtml")
+	if err != nil {
+		panic(err)
+	}
+
+	err = t.Execute(os.Stdout, data)
+	if err != nil {
+		panic(err)
+	}
+
 	http.HandleFunc("/", hello)
 
 	fmt.Printf("Starting server for testing HTTP POST...\n")
