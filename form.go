@@ -12,7 +12,16 @@ type User struct {
 	Name string
 }
 
-func hello(w http.ResponseWriter, r *http.Request) {
+var homeTemplate *template.Template
+
+func home(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	if err := homeTemplate.Execute(w, nil); err != nil {
+		panic(err)
+	}
+}
+
+func readdata(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.Error(w, "404 not found.", http.StatusNotFound)
 		return
@@ -51,7 +60,13 @@ func main() {
 		panic(err)
 	}
 
-	http.HandleFunc("/", hello)
+	homeTemplate, err = template.ParseFiles("home.gohtml")
+	if err != nil {
+		panic(err)
+	}
+
+	http.HandleFunc("/", readdata)
+	http.HandleFunc("/home", home)
 
 	fmt.Printf("Starting server for testing HTTP POST...\n")
 	if err := http.ListenAndServe(":4080", nil); err != nil {
