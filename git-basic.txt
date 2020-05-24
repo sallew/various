@@ -1,0 +1,31 @@
+git config --global user.name "Erik Walles"
+git config --global user.email "erik.walles@ericsson.com"
+
+Create a new repository
+git clone git@gitlab.rnd.gic.ericsson.se:ran-i/exilis/vdu-deployment.git
+cd vdu-deployment
+touch README.md
+git add README.md
+git commit -m "add README"
+git push -u origin master
+
+Push an existing folder
+cd existing_folder
+git init
+git remote add origin git@gitlab.rnd.gic.ericsson.se:ran-i/exilis/vdu-deployment.git
+git add .
+git commit -m "Initial commit"
+git push -u origin master
+
+Push an existing Git repository
+cd existing_repo
+git remote rename origin old-origin
+git remote add origin git@gitlab.rnd.gic.ericsson.se:ran-i/exilis/vdu-deployment.git
+git push -u origin --all
+git push -u origin --tags
+
+When you have commited your changes locally:
+git checkout -b my_review_branch
+git push -o merge_request.create origin my_review_branch
+
+
