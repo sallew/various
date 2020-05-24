@@ -2,17 +2,23 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 )
 
-type ContactDetails struct {
-	Email   string
-	Subject string
-	Message string
+func info(w http.ResponseWriter, req *http.Request) {
+	fmt.Fprintf(w, "_info_\n")
 }
 
 func main() {
+
+	type ContactDetails struct {
+		Email   string
+		Subject string
+		Message string
+	}
+
 	tmpl := template.Must(template.ParseFiles("forms.html"))
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -32,6 +38,8 @@ func main() {
 
 		tmpl.Execute(w, struct{ Success bool }{true})
 	})
+
+	http.HandleFunc("/info", info)
 
 	http.ListenAndServe(":4080", nil)
 }
