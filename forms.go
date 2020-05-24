@@ -17,6 +17,9 @@ var details ContactDetails
 
 func info(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "_info_\n")
+	fmt.Fprintf(w, "Email: %s\n", details.Email)
+	fmt.Fprintf(w, "Subject: %s\n", details.Subject)
+	fmt.Fprintf(w, "Message: %s\n", details.Message)
 }
 
 func reader(w http.ResponseWriter, r *http.Request) {
