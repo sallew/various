@@ -12,11 +12,13 @@ type User struct {
 	Name string
 }
 
+var data User
+
 var homeTemplate *template.Template
 
 func home(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	if err := homeTemplate.Execute(w, nil); err != nil {
+	if err := homeTemplate.Execute(w, data); err != nil {
 		panic(err)
 	}
 }
@@ -38,6 +40,7 @@ func readdata(w http.ResponseWriter, r *http.Request) {
 		}
 		fmt.Fprintf(w, "Post from website! r.PostFrom = %v\n", r.PostForm)
 		name := r.FormValue("name")
+		data.Name = name
 		address := r.FormValue("address")
 		fmt.Fprintf(w, "Name = %s\n", name)
 		fmt.Fprintf(w, "Address = %s\n", address)
@@ -48,7 +51,7 @@ func readdata(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
-	data := User{Name: "John Smith"}
+	data.Name = "John Smith"
 
 	t, err := template.ParseFiles("show.gohtml")
 	if err != nil {
@@ -60,7 +63,7 @@ func main() {
 		panic(err)
 	}
 
-	homeTemplate, err = template.ParseFiles("home.gohtml")
+	homeTemplate, err = template.ParseFiles("show.gohtml")
 	if err != nil {
 		panic(err)
 	}
