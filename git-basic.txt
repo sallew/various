@@ -28,4 +28,16 @@ When you have commited your changes locally:
 git checkout -b my_review_branch
 git push -o merge_request.create origin my_review_branch
 
+Create a new repository on the command line
+echo "# web-server" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/sallew/web-server.git
+git push -u origin master
+
+Push an existing repository from the command line
+git remote add origin https://github.com/sallew/web-server.git
+git push -u origin master
+
 
